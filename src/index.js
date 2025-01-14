@@ -35,11 +35,11 @@ app.post('/cf-clearance-scraper', async (req, res) => {
 
     if (check !== true) return res.status(400).json({ code: 400, message: 'Bad Request', schema: check })
 
-    if (authToken && data.authToken !== authToken) return res.status(401).json({ code: 401, message: 'Unauthorized' })
+    if (authToken && data.authToken !== authToken) return res.status(401).json({ code: 401, message: 'Cloudflare: Unauthorized' })
 
-    if (global.browserLength >= global.browserLimit) return res.status(429).json({ code: 429, message: 'Too Many Requests' })
+    if (global.browserLength >= global.browserLimit) return res.status(429).json({ code: 429, message: 'Cloudflare: limit open browser' })
 
-    if (process.env.SKIP_LAUNCH != 'true' && !global.browser) return res.status(500).json({ code: 500, message: 'The scanner is not ready yet. Please try again a little later.' })
+    if (process.env.SKIP_LAUNCH != 'true' && !global.browser) return res.status(500).json({ code: 500, message: 'Cloudflare: The scanner is not ready yet. Please try again a little later.' })
 
     var result = { code: 500 }
 
