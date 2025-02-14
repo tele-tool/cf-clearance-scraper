@@ -20,3 +20,7 @@ Giải captcha aws turnstile
 
 # 14-1
     - update
+
+# 14-2
+(có thư viện mới)
+    - chạy lệnh: node index.js
