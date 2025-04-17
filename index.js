@@ -1,13 +1,13 @@
 var forever = require('forever-monitor');
 
 var child = new (forever.Monitor)('src/index.js', {
-    max: 3,
+    max: 100,
     'killTree': true,
     'uid': '260194',
 });
 
 child.on('exit', function () {
-    console.log('src/index.js has exited after 3 restarts');
+    console.log('src/index.js has exited after 100 restarts');
 });
 
 child.start();
