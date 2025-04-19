@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.SERVER_PORT || 3000
+const server_name = process.env.SERVER_NAME || "default"
 const bodyParser = require('body-parser')
 const authToken = process.env.authToken || null
 const cors = require('cors')
@@ -14,7 +15,7 @@ app.use(bodyParser.json({}))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
 if (process.env.NODE_ENV !== 'development') {
-    let server = app.listen(port, () => { console.log(`Server running on port ${port}`) })
+    let server = app.listen(port, () => { console.log(`Server ${server_name} running on port ${port}`) })
     try {
         server.timeout = global.timeOut
     } catch (e) { }
