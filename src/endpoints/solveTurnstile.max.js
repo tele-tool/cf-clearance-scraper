@@ -3,6 +3,9 @@ function solveTurnstileMin({ url, proxy }) {
 
         if (!url) return reject('Missing url parameter')
 
+        // Chrome normalizes "https://host" to "https://host/", so the intercept pattern must use the normalized form
+        url = new URL(url).href
+
         const context = await global.browser.createBrowserContext().catch(() => null);
 
         if (!context) return reject('Failed to create browser context')
@@ -50,6 +53,13 @@ function solveTurnstileMin({ url, proxy }) {
                     },
                 }
             )
+            // arction
+            // await page.setCookie({
+            //     name: 'cn_session',
+            //     value: '8e152367565db130904064c2eab21a11c98cf7db25ebad364d7000945c8e0d3b',
+            //     domain: new URL(url).hostname,
+            //     path: '/'
+            // })
             await page.goto(url, {
                 waitUntil: 'domcontentloaded'
             })

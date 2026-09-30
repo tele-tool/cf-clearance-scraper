@@ -26,7 +26,7 @@ Giải captcha aws turnstile
     - chạy lệnh: node index.js
 
 # 19-4
-(có env mới)
+(có env mới, thư viện mới)
     - thêm logic, để chạy ở nhiều port, mỗi port cho 1 tool riêng
         - set SERVER_LIST theo mẫu
         - mở nhiều cmd, mỗi cmd chọn 1 port khác nhau
