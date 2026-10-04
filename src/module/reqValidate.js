@@ -30,6 +30,28 @@ const schema = {
         },
         "siteKey": {
             "type": "string"
+        },
+        "action": {
+            "type": "string"
+        },
+        "cookies": {
+            "oneOf": [
+                { "type": "string" },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": { "type": "string" },
+                            "value": { "type": "string" },
+                            "domain": { "type": "string" },
+                            "path": { "type": "string" }
+                        },
+                        "required": ["name", "value"],
+                        "additionalProperties": true
+                    }
+                }
+            ]
         }
     },
     "required": ["mode", "url"],

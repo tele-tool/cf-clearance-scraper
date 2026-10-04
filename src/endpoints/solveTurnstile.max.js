@@ -1,4 +1,4 @@
-function solveTurnstileMin({ url, proxy }) {
+function solveTurnstileMax({ url, proxy, cookies }) {
     return new Promise(async (resolve, reject) => {
 
         if (!url) return reject('Missing url parameter')
@@ -28,6 +28,17 @@ function solveTurnstileMin({ url, proxy }) {
             const interceptManager = new RequestInterceptionManager(client)
 
             await page.setRequestInterception(true);
+            let p = process.env.PROXY
+            // if (p) {
+            //     p = p.split(":")
+            //     proxy = {
+            //         host: p[0],
+            //         port: p[1],
+            //         username: p[2],
+            //         password: p[3],
+            //     }
+            // }
+            // console.log(proxy)
             page.on('request', async (request) => {
                 try {
                     if (proxy) {
@@ -53,13 +64,17 @@ function solveTurnstileMin({ url, proxy }) {
                     },
                 }
             )
-            // arction
-            // await page.setCookie({
-            //     name: 'cn_session',
-            //     value: '8e152367565db130904064c2eab21a11c98cf7db25ebad364d7000945c8e0d3b',
-            //     domain: new URL(url).hostname,
-            //     path: '/'
-            // })
+            if (cookies) {
+                const hostname = new URL(url).hostname
+                // Accept either "a=1; b=2" or [{ name, value, domain?, path? }]
+                const list = typeof cookies === 'string'
+                    ? cookies.split(';').map(c => c.trim()).filter(Boolean).map(c => {
+                        const i = c.indexOf('=')
+                        return { name: c.slice(0, i).trim(), value: c.slice(i + 1).trim() }
+                    })
+                    : cookies
+                await page.setCookie(...list.map(c => ({ domain: hostname, path: '/', ...c })))
+            }
             await page.goto(url, {
                 waitUntil: 'domcontentloaded'
             })
@@ -89,4 +104,4 @@ function solveTurnstileMin({ url, proxy }) {
 
     })
 }
-module.exports = solveTurnstileMin
+module.exports = solveTurnstileMax

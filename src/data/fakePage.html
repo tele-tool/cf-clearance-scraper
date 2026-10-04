@@ -14,6 +14,7 @@
         window.onloadTurnstileCallback = function () {
             turnstile.render('.turnstile', {
                 sitekey: '<site-key>',
+                action: '<action>',
                 callback: function (token) {
                     var c = document.createElement('input');
                     c.type = 'hidden';
